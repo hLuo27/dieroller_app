@@ -70,7 +70,11 @@ ui <- fluidPage(
                      "Number of rolls:",
                      min = 1,
                      max = 100,
-                     value = 20)
+                     value = 20),
+         numericInput("seed",
+                      "Set the random seed:",
+                      min = 1,
+                      value = 123)
       )
    )
 )
@@ -83,6 +87,7 @@ server <- function(input, output) {
        stop("Error: Probabilities must sum up to 1")
      }
      
+     set.seed(input$seed)
      results <- roll(c(input$side1, input$side2, input$side3, input$side4, input$side5, input$side6),times = input$num_rolls, 
                      p = c(input$prob1, input$prob2, input$prob3, input$prob4, input$prob5, input$prob6))
      results_df = make_results_df(results)
